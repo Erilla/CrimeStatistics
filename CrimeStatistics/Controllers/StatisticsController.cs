@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CrimeStatistics.Business.StatisticsHandler;
+using CrimeStatistics.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +10,23 @@ namespace CrimeStatistics.Controllers
 {
     public class StatisticsController : Controller
     {
-        public IActionResult Index()
+        public readonly IStatisticsHandler _statisticsHandler;
+
+        public StatisticsController(IStatisticsHandler statisticsHandler)
         {
-            return View();
+            _statisticsHandler = statisticsHandler;
+        }
+
+        public async Task<IActionResult> IndexAsync()
+        {
+            var statistics = await _statisticsHandler.GetCrimeStatisticsAsync();
+
+            var model = new StatisticsViewModel
+            {
+                Categories = statistics.Categories
+            };
+
+            return View(model);
         }
     }
 }

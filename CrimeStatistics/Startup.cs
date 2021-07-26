@@ -1,3 +1,5 @@
+using CrimeStatistics.Business.Repositories;
+using CrimeStatistics.Business.StatisticsHandler;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,6 +26,10 @@ namespace CrimeStatistics
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddHttpClient();
+
+            services.AddScoped<IStatisticsHandler, StatisticsHandler>();
+            services.AddScoped<ICrimesRepository, CrimesRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
