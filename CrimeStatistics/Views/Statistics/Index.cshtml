@@ -52,19 +52,35 @@
 @if (Model.Statistics != null)
 {
     <br />
+    @Html.Raw($"{Model.Statistics.Crimes.Count} Results found")
+    <br />
 
     <div class="card-group">
-        @foreach (var category in Model.Categories)
+        @if (Model.Statistics.Crimes.Count == 0)
         {
             <div class="col-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">@category</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">@Model.Statistics.Crimes.Count(c => c.CategoryName == category) incidents</h6>
+                        <h5 class="card-title">No data found.</h5>
                     </div>
                 </div>
             </div>
         }
+        else
+        {
+            @foreach (var category in Model.Categories)
+            {
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@category</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@Model.Statistics.Crimes.Count(c => c.CategoryName == category) incidents</h6>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
     </div>
 }
 
