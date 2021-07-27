@@ -1,5 +1,3 @@
-using System;
-
 namespace CrimeStatistics.Models
 {
     public class ErrorViewModel

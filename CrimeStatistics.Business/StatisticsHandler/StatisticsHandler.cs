@@ -17,9 +17,9 @@ namespace CrimeStatistics.Business.StatisticsHandler
             _crimesRepository = crimeRepository;
         }
 
-        public async Task<Statistics> GetCrimeStatisticsAsync()
+        public async Task<Statistics> GetCrimeStatisticsAsync(decimal latitude, decimal longitude, DateTime month)
         {
-            var crimeStreetResponse = await _crimesRepository.GetCrimeStreet(51.44237m, -2.49810m, new DateTime(2021, 01, 01));
+            var crimeStreetResponse = await _crimesRepository.GetCrimeStreet(latitude, longitude, month);
             var crimeCategoryResponse = await _crimesRepository.GetCrimeCategories();
 
             return new Statistics { Crimes = GenerateCrimes(crimeStreetResponse, crimeCategoryResponse) };

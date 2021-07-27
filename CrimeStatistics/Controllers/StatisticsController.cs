@@ -31,7 +31,7 @@ namespace CrimeStatistics.Controllers
                 return View(model);
             }
 
-            var statistics = await _statisticsHandler.GetCrimeStatisticsAsync();
+            var statistics = await _statisticsHandler.GetCrimeStatisticsAsync(model.Latitude.Value, model.Longitude.Value, DateTime.Parse(model.Month));
 
             var categories = statistics.Crimes.Select(c => c.CategoryName).Distinct().ToList();
 
