@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CrimeStatistics.Business.Models
 {
     public class Statistics
     {
-        public string Categories { get; set; }
+        public List<Crime> Crimes { get; set; }
     }
 }

@@ -1,13 +1,9 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace CrimeStatistics.Business.Models.PoliceApi
 {
     public class CrimeStreetResponse
     {
-        public string Category { get; set; }
-
-        public int Id { get; set; }
-
-        public DateTime Month { get; set; }
+        public List<CrimeStreet> CrimeStreets { get; set; }
     }
 }

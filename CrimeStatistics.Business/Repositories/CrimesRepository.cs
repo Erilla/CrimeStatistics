@@ -26,8 +26,8 @@ namespace CrimeStatistics.Business.Repositories
 
             if (response.IsSuccessStatusCode)
             {
-                var json = await response.Content.ReadAsStreamAsync();
-                var categoriesList = await JsonSerializer.DeserializeAsync<List<CrimeCategory>>(json);
+                var stream = await response.Content.ReadAsStreamAsync();
+                var categoriesList = await JsonSerializer.DeserializeAsync<List<CrimeCategory>>(stream);
                 return new CrimeCategoriesResponse { CrimeCategories = categoriesList };
             } 
             else
@@ -36,9 +36,26 @@ namespace CrimeStatistics.Business.Repositories
             }
         }
 
-        public Task<CrimeStreetResponse> GetCrimeStreet(string latitude, string longitude, DateTime month)
+        public async Task<CrimeStreetResponse> GetCrimeStreet(decimal latitude, decimal longitude, DateTime month)
         {
-            throw new NotImplementedException();
+            var client = _clientFactory.CreateClient();
+
+            var url = $"https://data.police.uk/api/crimes-street/all-crime?lat={latitude}&lng={longitude}&date={month:yyyy-MM}"; // TODO: Add url into config
+
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+            using var response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var stream = await response.Content.ReadAsStreamAsync();
+                var crimeStreetsList = await JsonSerializer.DeserializeAsync<List<CrimeStreet>>(stream);
+                return new CrimeStreetResponse { CrimeStreets = crimeStreetsList };
+            }
+            else
+            {
+                throw new HttpRequestException("Request GetCrimeStreet failed", null, response.StatusCode);
+            }
         }
     }
 }

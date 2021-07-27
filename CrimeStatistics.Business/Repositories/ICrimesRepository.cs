@@ -6,7 +6,7 @@ namespace CrimeStatistics.Business.Repositories
 {
     public interface ICrimesRepository
     {
-        Task<CrimeStreetResponse> GetCrimeStreet(string latitude, string longitude, DateTime month);
+        Task<CrimeStreetResponse> GetCrimeStreet(decimal latitude, decimal longitude, DateTime month);
 
         Task<CrimeCategoriesResponse> GetCrimeCategories();
     }

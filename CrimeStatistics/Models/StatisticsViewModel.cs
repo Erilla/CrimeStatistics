@@ -1,12 +1,25 @@
-﻿using System;
+﻿using CrimeStatistics.Business.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CrimeStatistics.Models
 {
     public class StatisticsViewModel
     {
-        public string Categories { get; set; }
+        public StatisticsViewModel()
+        {
+            Error = new List<string>();
+        }
+
+        public decimal? Latitude { get; set; }
+        
+        public decimal? Longitude { get; set; }
+
+        public string Month { get; set; }
+
+        public List<string> Error { get; set; }
+
+        public Statistics Statistics { get; set; }
+
+        public List<string> Categories { get; set; }
     }
 }

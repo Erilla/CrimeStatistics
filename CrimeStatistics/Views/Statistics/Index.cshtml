@@ -2,9 +2,69 @@
     ViewData["Title"] = "Crime Statistics";
 }
 
-@model StatisticsViewModel;
+@model StatisticsViewModel
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    @Model.Categories
-</div>
+@using (Html.BeginForm("Index", "Statistics", FormMethod.Post))
+{
+    <div class="container">
+        <span class="col-4">
+            @Html.LabelFor(m => m.Latitude)
+        </span>
+
+        <span class="col-4">
+            @Html.TextBoxFor(m => m.Latitude)
+        </span>
+    </div>
+
+    <div class="container">
+        <span class="col-4">
+            @Html.LabelFor(m => m.Longitude)
+        </span>
+
+        <span class="col-4">
+            @Html.TextBoxFor(m => m.Longitude)
+        </span>
+    </div>
+
+    <div class="container">
+        <span class="col-4">
+            @Html.LabelFor(m => m.Month)
+        </span>
+
+        <span class="col-4">
+            @Html.TextBoxFor(m => m.Month, new { @class = "date-picker" })
+        </span>
+    </div>
+
+    @if (Model.Error.Any())
+    {
+        foreach (var error in Model.Error)
+        {
+            <div class="alert alert-danger" role="alert">
+                @error
+            </div>
+        }
+    }
+
+    <input type="submit" name="submitButton" value="Submit" />
+}
+
+@if (Model.Statistics != null)
+{
+    <br />
+
+    <div class="card-deck">
+        @foreach (var category in Model.Categories)
+        {
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@category</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@Model.Statistics.Crimes.Count(c => c.CategoryName == category) incidents</h6>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
